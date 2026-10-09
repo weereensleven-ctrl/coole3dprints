@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coole3dprints</title>
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 900px;
+            margin: 0 auto 40px auto;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin: 0;
+            text-align: center;
+            flex: 1;
+        }
+
+        header button {
+            background: black;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .product-card {
+            background: white;
+            padding: 15px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            background: #fff;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-card select, .product-card input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+        }
+
+        .product-card button {
+            background: #000;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .modal {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 20px;
+            position: relative;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        #closeCart {
+            background: none;
+            color: black;
+            width: auto;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            font-size: 22px;
+            cursor: pointer;
+            border: none;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pay-btn {
+            background: #27ae60;
+            color: white;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .logo {
+                width: 400px;
+                height: 400px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" class="logo">
+    <h1>coole3dprints</h1>
+    <img src="logo.png" class="logo">
+</header>
+
+<button id="openCart">Winkelmand bekijken 🛒</button>
+
+<section class="product-grid">
+
+    <!-- PRODUCT 1 -->
+    <div class="product-card">
+        <img src="sle.png">
+        <h3>Voetbalclub sleutelhanger</h3>
+        <p>€2</p>
+
+        <select id="kleur1">
+            <option value="Ajax">Ajax</option>
+            <option value="PSV">PSV</option>
+            <option value="Feyenoord">Feyenoord</option>
+        </select>
+
+        <button onclick="addToCart('sleutelhanger', document.getElementById('kleur1').value, 2)">
+            Toevoegen
+        </button>
+    </div>
+
+    <!-- PRODUCT 2 -->
+    <div class="product-card">
+        <img src="VB.png">
+        <h3>Voetbalkaartje</h3>
+        <p>€3</p>
+
+        <select id="kleur2">
+            <option value="zwart + wit + geel">zwart + wit + geel</option>
+        </select>
+
+        <select id="voetballer">
+            <option value="Ronaldo">Ronaldo</option>
+            <option value="Messi">Messi</option>
+            <option value="Mbappé">Mbappé</option>
+            <option value="Yamal">Yamal</option>
+        </select>
+
+        <button onclick="
+            addToCart(
+                'Voetbalkaartje | ' + document.getElementById('voetballer').value,
+                document.getElementById('kleur2').value,
+                3
+            )
+        ">
+            Toevoegen
+        </button>
+    </div>
+
+    <!-- PRODUCT 3 -->
+    <div class="product-card">
+        <img src="kpop2.jpg">
+        <h3>k-pop tekenfiguur (3keer)</h3>
+        <p>€3,20</p>
+
+        <select id="kleur3">
+            <option value="zwart + wit">zwart + wit</option>
+        </select>
+
+        <select id="stiften3">
+            <option value="Geen stiften">Geen stiften</option>
+            <option value="Met stiften (+€1)">Met stiften (+€1)</option>
+        </select>
+
+        <button onclick="
+            addToCart(
+                'k-pop tekenfiguur | ' + document.getElementById('stiften3').value,
+                document.getElementById('kleur3').value,
+                document.getElementById('stiften3').value.includes('+€1') ? 4.20 : 3.20
+            )
+        ">
+            Toevoegen
+        </button>
+    </div>
+
+    <!-- PRODUCT 4 (AANGEPAST MET NAAMVELD) -->
+    <div class="product-card">
+        <img src="W.jpeg">
+        <h3>Envelopje om geld in te doen voor een jarige</h3>
+        <p>€3</p>
+
+        <select id="kleur4">
+            <option value="wit">wit</option>
+             <option value="wit">Lichtroze</option>
+              <option value="wit">Donkerblauw</option>
+               <option value="wit">Zwart</option>
+        </select>
+
+        <input type="text" id="naam4" placeholder="Naam voor op het envelopje">
+
+        <button onclick="
+            addToCart(
+                'envelopje-jarige | Naam: ' + document.getElementById('naam4').value,
+                document.getElementById('kleur4').value,
+                2.50
+            )
+        ">
+            Toevoegen
+        </button>
+    </div>
+
+</section>
+
+<!-- WINKELMAND -->
+<div id="cartPopup" class="overlay">
+    <div class="modal">
+        <button id="closeCart">✕</button>
+
+        <h2>Bestelling</h2>
+
+        <form id="orderForm" action="https://formspree.io/f/xrekwlkb" method="POST">
+
+            <textarea id="cartItems" name="bestelling" readonly placeholder="Je mandje is leeg"></textarea>
+
+            <input type="text" name="naam" placeholder="Naam" required>
+            <input type="email" name="email" placeholder="E-mail" required>
+
+            <div class="form-row">
+                <input type="text" name="straat" placeholder="Straatnaam" required>
+                <input type="text" name="huisnummer" placeholder="Nr" required>
+            </div>
+
+            <input type="text" name="adres" placeholder="Volledig adres" required>
+
+            <button type="submit" class="pay-btn">Bestellen & Betalen</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    let cart = [];
+    let total = 0;
+    const popup = document.getElementById("cartPopup");
+
+    function addToCart(item, kleur, prijs) {
+        cart.push(item + " | Kleur: " + kleur);
+        total += prijs;
+
+        document.getElementById("cartItems").value =
+            cart.join("\n") + "\n\nTotaal: €" + total.toFixed(2);
+
+        showAddedMessage();
+    }
+
+    function showAddedMessage() {
+        const msg = document.createElement("div");
+        msg.innerText = "Toegevoegd aan winkelmandje!";
+        msg.style.position = "fixed";
+        msg.style.bottom = "20px";
+        msg.style.right = "20px";
+        msg.style.background = "black";
+        msg.style.color = "white";
+        msg.style.padding = "12px 18px";
+        msg.style.borderRadius = "10px";
+        msg.style.fontWeight = "600";
+        msg.style.zIndex = "2000";
+        msg.style.opacity = "1";
+        msg.style.transition = "opacity 0.8s";
+
+        document.body.appendChild(msg);
+
+        setTimeout(() => {
+            msg.style.opacity = "0";
+            setTimeout(() => msg.remove(), 800);
+        }, 1200);
+    }
+
+    document.getElementById("openCart").onclick = () => popup.style.display = "block";
+    document.getElementById("closeCart").onclick = () => popup.style.display = "none";
+</script>
+
+</body>
+</html>
